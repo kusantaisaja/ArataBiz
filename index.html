@@ -1,0 +1,162 @@
+<html lang="ja">
+
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="google" content="notranslate">
+	<title>住所をGoogleMapsに表示</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+	<script type="text/javascript"
+		src="http://maps.google.com/maps/api/js?key=####"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		var map;
+		function initialize() {
+			createMap();
+		}
+		function createMap(flag) {
+			console.log("createMap")
+			var address;
+			if (flag) {
+				var addlist = window.document.getElementById("addresses").value;
+				address = addlist.split("\n");
+				
+			}
+			var list = document.getElementById("list");
+			list.innerHTML = "";
+
+			var latlng = new google.maps.LatLng(31.5680652, 130.5465515);
+			var myOptions = {
+				zoom: 15,
+				center: latlng,
+				disableDefaultUI: true,
+			};
+			map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+			// 住所プロット
+
+			var marker;
+			var i = 0;
+			var geocode = new google.maps.Geocoder();
+			var maxLat, minLat, maxLng, minLng;
+			function plot_address(results, status) {
+				var location;
+				if (status == google.maps.GeocoderStatus.OK) {
+					location = results[0].geometry.location;
+
+					var lat = location.lat();
+					var lng = location.lng();
+					if (!maxLng || maxLng < lng) {maxLng = lng;}
+					if (!minLng || minLng > lng) {minLng = lng;}
+					if (!maxLat || maxLat < lat) {maxLat = lat;}
+					if (!minLat || minLat > lat) {minLat = lat;}
+				} else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+					setTimeout(function () {
+						geocode.geocode({'address': address[i]}, plot_address);
+					}, 100);
+					return;
+				}
+				marker =
+					createMarker(
+						(i + 1),
+						location,
+						address[i]);
+
+				if (maxLng) {
+					map.fitBounds(new google.maps.LatLngBounds(
+						new google.maps.LatLng(minLat, minLng),
+						new google.maps.LatLng(maxLat, maxLng)
+					));
+				}
+
+				i++;
+				if (i < address.length) {
+					geocode.geocode({'address': address[i]}, plot_address);
+				}
+
+			}
+			if (flag && i < address.length) {
+				geocode.geocode({'address': address[i]}, plot_address);
+			}
+		}
+		function dmy() { }
+		function createMarker(seq, location, locname) {
+			var infowindow;
+			var marker;
+
+			if (location) {
+	//	var iconUrl;if (seq <= 999){iconUrl = "../markers/marker"+seq+".png";} else {iconUrl = "../markers/marker.png";}var icon = new google.maps.MarkerImage(iconUrl,new google.maps.Size(25, 39) // size);
+				marker = new google.maps.Marker({
+					map: map,
+					position: location,
+					label: `${seq}`,
+					title: locname,
+					optimized: true,
+					draggable: true,
+					// icon:icon
+				});
+
+
+				var html = "<div style=\"width:200px; height:50px;\" align=center>";
+				html += "<table height=100% width=100%><tr><td><font size=2>" + seq + ". " + locname + "</font></td></tr></table></div>";
+
+				infowindow = new google.maps.InfoWindow();
+				infowindow.setContent(html);
+				google.maps.event.addListener(marker, "click", function (event) {
+					infowindow.open(map, marker);
+				});
+			}
+
+			var list = document.getElementById("list");
+			var newli = document.createElement("li");
+			var link = document.createElement("A");
+			link.href = "#";
+			var text = document.createTextNode(locname);
+			link.appendChild(text);
+			newli.appendChild(link);
+			if (!location) {
+				newli.appendChild(document.createTextNode("（該当無し）"));
+			}
+			list.appendChild(newli);
+			link.onclick = function () {
+				if (location) {
+					infowindow.open(map, marker);
+				} else {
+					alert("「" + locname + "」は場所がみつかりませんでした");
+				}
+			}
+		}
+
+//]]>
+	</script>
+
+
+
+</head>
+
+<body onload="initialize()">
+
+	<table border=0 cellspacing=0 cellpadding="2" style="width: 100%; height: 100%">
+		<tr>
+			<td style="width: 100%; height: 100%">
+				<div id="map" style="width:100%; height:100%">
+				</div>
+			</td>
+
+			<td>
+				<div style="height:100%; width:200px; overflow:auto; "><b>
+						<font size="+1">住所リスト</font>
+					</b><br />
+					<ol id="list"></ol>
+
+					<form><textarea name="message" cols="25" rows="20" wrap="off" id="addresses"></textarea>
+						<br />
+						<input type="button" value="プロット" onclick="createMap(1);" />
+						<input type="reset" value="リセット" />
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
