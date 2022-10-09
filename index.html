@@ -17,6 +17,11 @@
 		function createMap(flag) {
 			console.log("createMap")
 			var address;
+			let url = new URL(window.location.href);
+// URLSearchParamsオブジェクトを取得
+let params = url.searchParams;
+// getAllメソッド
+var address = params.getAll('ad');
 			if (flag) {
 				var addlist = window.document.getElementById("addresses").value;
 				address = addlist.split("\n");
