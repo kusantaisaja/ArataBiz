@@ -7,7 +7,7 @@
 	<title>住所をGoogleMapsに表示</title>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
 	<script type="text/javascript"
-		src="http://maps.google.com/maps/api/js?key=AIzaSyAVJ68Ma_kZAsCCtIiZ64tKUjTKKa_kg5I"></script>
+		src="https://maps.google.com/maps/api/js?key=AIzaSyAVJ68Ma_kZAsCCtIiZ64tKUjTKKa_kg5I"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 		var map;
@@ -16,22 +16,22 @@
 		}
 		function createMap(flag) {
 			console.log("createMap")
-
-
-
-			var siken = '鹿児島県鹿児島市'
-			console.log(flag)
+      var siken = '鹿児島県鹿児島市'
+			var address;
+			let url = new URL(window.location.href);
+// URLSearchParamsオブジェクトを取得
+let params = url.searchParams;
+// getAllメソッド
+var address = params.getAll('ad');
 			if (flag) {
 				var addlist = window.document.getElementById("addresses").value;
 				address = addlist.split("\n");
+				
 			}
-			
-							address.map((e)=>{
+      address.map((e)=>{
 				e=siken+e;
 				console.log(e)
 				})
-
-			console.log(address)
 
 			var list = document.getElementById("list");
 			list.innerHTML = "";
@@ -48,7 +48,6 @@
 
 			var marker;
 			var i = 0;
-			var v;
 			var geocode = new google.maps.Geocoder();
 			var maxLat, minLat, maxLng, minLng;
 			function plot_address(results, status) {
@@ -58,17 +57,17 @@
 
 					var lat = location.lat();
 					var lng = location.lng();
-					if (!maxLng || maxLng < lng) { maxLng = lng; }
-					if (!minLng || minLng > lng) { minLng = lng; }
-					if (!maxLat || maxLat < lat) { maxLat = lat; }
-					if (!minLat || minLat > lat) { minLat = lat; }
+					if (!maxLng || maxLng < lng) {maxLng = lng;}
+					if (!minLng || minLng > lng) {minLng = lng;}
+					if (!maxLat || maxLat < lat) {maxLat = lat;}
+					if (!minLat || minLat > lat) {minLat = lat;}
 				} else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
 					setTimeout(function () {
-						geocode.geocode({ 'address': address[i] }, plot_address);
+						geocode.geocode({'address': address[i]}, plot_address);
 					}, 100);
 					return;
 				}
-				
+        
 				if (address[i] !== address[i - 1]) {
 					marker =
 						createMarker(
@@ -86,12 +85,12 @@
 
 				i++;
 				if (i < address.length) {
-					geocode.geocode({ 'address': address[i] }, plot_address);
+					geocode.geocode({'address': address[i]}, plot_address);
 				}
 
 			}
 			if (flag && i < address.length) {
-				geocode.geocode({ 'address': address[i] }, plot_address);
+				geocode.geocode({'address': address[i]}, plot_address);
 			}
 		}
 		function dmy() { }
@@ -100,7 +99,7 @@
 			var marker;
 
 			if (location) {
-
+	//	var iconUrl;if (seq <= 999){iconUrl = "../markers/marker"+seq+".png";} else {iconUrl = "../markers/marker.png";}var icon = new google.maps.MarkerImage(iconUrl,new google.maps.Size(25, 39) // size);
 				marker = new google.maps.Marker({
 					map: map,
 					position: location,
@@ -111,8 +110,7 @@
 					// icon:icon
 				});
 
-
-				var html = "<div style=\"width:200px; height:50px;\" align=center>";
+        var html = "<div style=\"width:200px; height:50px;\" align=center>";
 				html += "<table height=100% width=100%><tr><td><font size=2>" + seq + ".S " + locname + "</font></td></tr></table></div>";
 
 				infowindow = new google.maps.InfoWindow();
