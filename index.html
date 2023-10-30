@@ -16,7 +16,6 @@
 		}
 		function createMap(flag) {
 			console.log("createMap")
-      var siken = '鹿児島県鹿児島市'
 			var address;
 			let url = new URL(window.location.href);
 // URLSearchParamsオブジェクトを取得
@@ -30,14 +29,9 @@ var address = params.getAll('ad');
         
         // 各住所に "鹿児島県鹿児島市" を追加
         for (var i = 0; i < address.length; i++) {
-            address[i] = "鹿児島県鹿児島市 " + address[i];
+            address[i] = "鹿児島県鹿児島市" + address[i];
         }
     }
-      address.map((e)=>{
-				e=siken+e;
-				console.log(e)
-				})
-
 			var list = document.getElementById("list");
 			list.innerHTML = "";
 
