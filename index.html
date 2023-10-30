@@ -24,10 +24,15 @@ let params = url.searchParams;
 // getAllメソッド
 var address = params.getAll('ad');
 			if (flag) {
-				var addlist = window.document.getElementById("addresses").value;
-				address = addlist.split("\n");
-				
-			}
+        // テキストエリアから住所の文字列を取得
+        var addlist = document.getElementById("addresses").value;
+        var address = addlist.split("\n");
+        
+        // 各住所に "鹿児島県鹿児島市" を追加
+        for (var i = 0; i < address.length; i++) {
+            address[i] = "鹿児島県鹿児島市 " + address[i];
+        }
+    }
       address.map((e)=>{
 				e=siken+e;
 				console.log(e)
