@@ -53,7 +53,6 @@ var address = params.getAll('ad');
 				var location;
 				if (status == google.maps.GeocoderStatus.OK) {
 					location = results[0].geometry.location;
-console.log(location)
 					var lat = location.lat();
 					var lng = location.lng();
 					if (!maxLng || maxLng < lng) {maxLng = lng;}
