@@ -57,7 +57,7 @@ var address = params.getAll('ad');
 					location = results[0].geometry.location;
 					var lat = location.lat();
 					var lng = location.lng();
-					arry_langlat.push({name:address[i], lat: lat, lng: lng }); // 緯度経度情報をarry_langlatに追加
+					arry_langlat.push([lat,lng]); // 緯度経度情報をarry_langlatに追加
 					if (!maxLng || maxLng < lng) {maxLng = lng;}
 					if (!minLng || minLng > lng) {minLng = lng;}
 					if (!maxLat || maxLat < lat) {maxLat = lat;}
