@@ -26,6 +26,8 @@ var address = params.getAll('ad');
         // テキストエリアから住所の文字列を取得
         var addlist = document.getElementById("addresses").value;
         var address = addlist.split("\n");
+
+	var arry_langlat = []
         
         // 各住所に "鹿児島県鹿児島市" を追加
         for (var i = 0; i < address.length; i++) {
@@ -55,6 +57,7 @@ var address = params.getAll('ad');
 					location = results[0].geometry.location;
 					var lat = location.lat();
 					var lng = location.lng();
+					arry_langlat.push({name:address[i], lat: lat, lng: lng }); // 緯度経度情報をarry_langlatに追加
 					if (!maxLng || maxLng < lng) {maxLng = lng;}
 					if (!minLng || minLng > lng) {minLng = lng;}
 					if (!maxLat || maxLat < lat) {maxLat = lat;}
@@ -90,6 +93,7 @@ var address = params.getAll('ad');
 			if (flag && i < address.length) {
 				geocode.geocode({'address': address[i]}, plot_address);
 			}
+			console.log(arry_langlat)
 		}
 		function dmy() { }
 		function createMarker(seq, location, locname) {
