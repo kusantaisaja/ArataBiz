@@ -93,8 +93,10 @@ var address = params.getAll('ad');
 			if (flag && i < address.length) {
 				geocode.geocode({'address': address[i]}, plot_address);
 			}
-			result = "\n".join([item[0] for item in arry_langlat])
-			console.log(result)
+			
+			const textData = arry_langlat.map(coord => coord[0]).join('\n');
+
+console.log(textData);
 		}
 		function dmy() { }
 		function createMarker(seq, location, locname) {
