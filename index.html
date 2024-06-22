@@ -94,10 +94,10 @@ var address = params.getAll('ad');
 				geocode.geocode({'address': address[i]}, plot_address);
 			}
 			
-			var textData = arry_langlat.map(coord => coord[0]).join('\n');
+			const result = arry_langlat.map(coord => coord.join(', ')).join('\n')
 			console.log(arry_langlat);
-			console.log(textData);
-			navigator.clipboard.writeText(textData)
+			console.log(result);
+			navigator.clipboard.writeText(result)
 		}
 		function dmy() { }
 		function createMarker(seq, location, locname) {
