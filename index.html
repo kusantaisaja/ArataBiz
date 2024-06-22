@@ -94,9 +94,8 @@ var address = params.getAll('ad');
 				geocode.geocode({'address': address[i]}, plot_address);
 			}
 			
-			const textData = arry_langlat.map(coord => coord[0]).join('\n');
-
-console.log(textData);
+			var textData = arry_langlat.map(coord => coord[0]).join('\n');
+			console.log(textData);
 		}
 		function dmy() { }
 		function createMarker(seq, location, locname) {
