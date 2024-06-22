@@ -94,20 +94,8 @@ var address = params.getAll('ad');
 				geocode.geocode({'address': address[i]}, plot_address);
 			}
 
-			console.log('Array before map:', arry_langlat);
-
-// Using forEach to debug
-const mappedArray = [];
-arry_langlat.forEach(coord => {
-    const joinedCoord = coord.join(', ');
-    console.log('Joined coordinate:', joinedCoord);
-    mappedArray.push(joinedCoord);
-});
-
-console.log('Mapped array:', mappedArray);
-
-const result = mappedArray.join('\n');
-console.log('Final result:', result);
+			const result = arry_langlat.map(coord => coord.join(', ')).join('\n');
+			console.log(JSON.stringify(result));
 
 			
 		}
