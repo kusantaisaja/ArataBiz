@@ -94,21 +94,27 @@ var address = params.getAll('ad');
 				geocode.geocode({'address': address[i]}, plot_address);
 			}
 
-let result = '';
-console.log(arry_langlat.flat());
-			console.log(arry_langlat.length);
-for (let i = 0; i < arry_langlat.length; i++) {
-    if (i > 0) {
-        result += '\n'; // 最初の要素以外に改行を挿入
+const result = async (arry_langlat) => {
+    let result = ''; // 変数resultの初期化
+    for (let i = 0; i < arry_langlat.length; i++) {
+        if (i > 0) {
+            result += '\n'; // 最初の要素以外に改行を挿入
+        }
+        result += arry_langlat[i][0];
     }
-    result += arry_langlat[i][0];
+    return result;
 }
 
-// 結果をそのまま出力
-console.log(result);
+const arry_langlat = [
+    ['Tokyo', 35.6895, 139.6917],
+    ['Kyoto', 35.0116, 135.7681],
+    ['Osaka', 34.6937, 135.5023]
+];
 
-// 結果をJSON形式で出力
-console.log(JSON.stringify(result));
+result(arry_langlat).then(output => {
+    console.log(output); // 結果をそのまま出力
+    console.log(JSON.stringify(output)); // 結果をJSON形式で出力
+});
 
 			
 		}
