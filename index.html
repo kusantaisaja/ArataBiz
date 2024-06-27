@@ -93,23 +93,10 @@ var address = params.getAll('ad');
 			if (flag && i < address.length) {
 				geocode.geocode({'address': address[i]}, plot_address);
 			}
-
-const result = async () => {
-    let result = ''; // 変数resultの初期化
-    for (let i = 0; i < arry_langlat.length; i++) {
-        if (i > 0) {
-            result += '\n'; // 最初の要素以外に改行を挿入
-        }
-        result += arry_langlat[i][0];
-    }
-    return result;
+if(arry_langlat){
+	console.log(arry_langlat)
+	var resarry = arry_langlat.join('\n')
 }
-console.log('arry_langlat',arry_langlat);
-result(arry_langlat).then(output => {
-    console.log(output); // 結果をそのまま出力
-    console.log(JSON.stringify(output)); // 結果をJSON形式で出力
-});
-
 			
 		}
 		function dmy() { }
