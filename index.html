@@ -105,12 +105,6 @@ const result = async (arry_langlat) => {
     return result;
 }
 
-const arry_langlat = [
-    ['Tokyo', 35.6895, 139.6917],
-    ['Kyoto', 35.0116, 135.7681],
-    ['Osaka', 34.6937, 135.5023]
-];
-
 result(arry_langlat).then(output => {
     console.log(output); // 結果をそのまま出力
     console.log(JSON.stringify(output)); // 結果をJSON形式で出力
