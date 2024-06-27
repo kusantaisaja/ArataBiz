@@ -94,7 +94,7 @@ var address = params.getAll('ad');
 				geocode.geocode({'address': address[i]}, plot_address);
 			}
 
-const result = async (arry_langlat) => {
+const result = async () => {
     let result = ''; // 変数resultの初期化
     for (let i = 0; i < arry_langlat.length; i++) {
         if (i > 0) {
@@ -104,7 +104,7 @@ const result = async (arry_langlat) => {
     }
     return result;
 }
-
+console.log('arry_langlat',arry_langlat);
 result(arry_langlat).then(output => {
     console.log(output); // 結果をそのまま出力
     console.log(JSON.stringify(output)); // 結果をJSON形式で出力
